@@ -1,0 +1,24 @@
+{
+  "name": "cipherguard",
+  "version": "1.0.0",
+  "description": "DecodeLabs Industrial Training Kit 2026 | Project 2: Basic Encryption & Decryption",
+  "main": "js/cipher.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test tests/cipher.test.js tests/dom.test.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "caesar-cipher",
+    "encryption",
+    "decryption",
+    "cybersecurity",
+    "cryptography",
+    "decodelabs"
+  ],
+  "author": "DecodeLabs Cybersecurity Analyst",
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}

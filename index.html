@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CIPHERGUARD — Explainable Caesar Cipher Encryption & Decryption Workbench. DecodeLabs Industrial Training Kit 2026 Project 2.">
+  <meta name="author" content="DecodeLabs Cybersecurity Analyst">
+  <title>CIPHERGUARD — Classical Encryption & Decryption Workbench | DecodeLabs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ========================================================================= -->
+  <!-- APPLICATION HEADER                                                        -->
+  <!-- ========================================================================= -->
+  <header class="app-header" role="banner">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon" aria-hidden="true">🛡️</div>
+        <div class="brand-titles">
+          <h1>
+            CIPHERGUARD
+            <span class="tag">Project 02</span>
+          </h1>
+          <div class="brand-subtitle">Classical Encryption &amp; Decryption Workbench</div>
+          <div class="brand-tagline">"Shift the perspective. Reveal the mechanism. Understand confidentiality."</div>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <span class="badge badge-live">● 100% Client-Side Engine</span>
+        <span class="badge">DecodeLabs Batch 2026</span>
+        <span class="badge">Zero Network Egress</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- NAVIGATION TABS                                                           -->
+  <!-- ========================================================================= -->
+  <nav class="nav-tabs-wrapper" aria-label="Workbench Sections">
+    <div class="nav-tabs" role="tablist">
+      <button class="tab-btn active" role="tab" id="tab-btn-workbench" data-tab="tab-workbench" aria-selected="true" aria-controls="tab-workbench">
+        <span>🔐</span>
+        <span>Interactive Workbench</span>
+      </button>
+      <button class="tab-btn" role="tab" id="tab-btn-cryptanalysis" data-tab="tab-cryptanalysis" aria-selected="false" aria-controls="tab-cryptanalysis">
+        <span>⚡</span>
+        <span>Brute-Force &amp; Cryptanalysis Lab</span>
+      </button>
+      <button class="tab-btn" role="tab" id="tab-btn-education" data-tab="tab-education" aria-selected="false" aria-controls="tab-education">
+        <span>📖</span>
+        <span>Educational &amp; Security Principles</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN WORKSPACE                                                            -->
+  <!-- ========================================================================= -->
+  <main id="main-content" class="main-container" role="main">
+
+    <!-- Security Advisory Banner -->
+    <aside class="security-banner" aria-label="Educational Security Notice">
+      <div class="security-banner-icon" aria-hidden="true">⚠️</div>
+      <div class="security-banner-text">
+        <h4>Educational Demonstration &amp; Confidentiality Notice</h4>
+        <p>
+          The Caesar cipher is an introductory <strong>classical substitution cipher</strong> used for learning reversible mathematical transformations. 
+          Because the English alphabet contains only 25 non-zero shifts, this cipher has an infinitesimal keyspace and offers <strong>zero modern confidentiality</strong>. 
+          It can be brute-forced or frequency-analyzed in under 1 millisecond. Never use Caesar ciphers or simple substitutions for real passwords, production secrets, or sensitive documents.
+        </p>
+      </div>
+    </aside>
+
+    <!-- TAB 1: INTERACTIVE WORKBENCH -->
+    <section id="tab-workbench" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-workbench">
+      
+      <!-- Validation / Status Notification Container -->
+      <div id="validation-msg" class="validation-msg" role="alert" aria-live="polite"></div>
+
+      <div class="workbench-grid">
+        
+        <!-- LEFT COLUMN: INPUTS & SHIFT CONFIGURATION -->
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              <span>📝</span>
+              <span>Candidate Text &amp; Shift Console</span>
+            </h2>
+          </div>
+
+          <p class="card-desc">
+            Enter plaintext to encrypt or paste existing ciphertext to decrypt. All character cases, punctuation, whitespace, and Unicode glyphs outside the English alphabet are preserved without corruption.
+          </p>
+
+          <!-- Input Text Area -->
+          <div class="form-group">
+            <div class="form-label">
+              <label for="plain-input">Input Message (Plaintext / Ciphertext):</label>
+              <span id="char-counter" class="char-counter" aria-live="polite">0 characters</span>
+            </div>
+            <textarea 
+              id="plain-input" 
+              class="form-control mono" 
+              placeholder="Type or paste message here (e.g., Hello World!)..."
+              aria-label="Input message to encrypt or decrypt"
+              rows="5"
+            ></textarea>
+            
+            <!-- Quick Sample Loaders -->
+            <div class="sample-presets" aria-label="Quick test examples">
+              <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Quick Samples:</span>
+              <button type="button" class="btn-sample" data-sample="Hello World!">Hello World!</button>
+              <button type="button" class="btn-sample" data-sample="ABCXYZ">ABCXYZ (Wraparound)</button>
+              <button type="button" class="btn-sample" data-sample="DecodeLabs Industrial Cybersecurity 2026!">DecodeLabs 2026</button>
+              <button type="button" class="btn-sample" data-sample="Special: 🛡️ Cyrillic Привет, café crème 123!">Unicode &amp; Diacritics</button>
+            </div>
+          </div>
+
+          <!-- Shift Key Configuration Card -->
+          <div class="shift-control-card">
+            <div class="form-label">
+              <label for="shift-input">Cryptographic Shift Key (Integer):</label>
+            </div>
+
+            <div class="shift-input-row">
+              <div class="shift-input-box">
+                <input 
+                  type="number" 
+                  id="shift-input" 
+                  class="form-control" 
+                  value="3" 
+                  step="1"
+                  aria-label="Numeric shift key value"
+                >
+              </div>
+              <div class="shift-slider-box">
+                <label for="shift-slider" class="sr-only" style="display:none;">Shift slider (0 to 25)</label>
+                <input 
+                  type="range" 
+                  id="shift-slider" 
+                  class="shift-slider" 
+                  min="0" 
+                  max="25" 
+                  value="3"
+                  aria-label="Shift key position slider"
+                >
+              </div>
+            </div>
+
+            <!-- Normalization Readout -->
+            <div id="shift-norm-badge" class="shift-normalization-badge">
+              Raw: 3 → Normalized: 3 (Shift +3 positions)
+            </div>
+
+            <!-- Shift Presets -->
+            <div class="shift-presets-row">
+              <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Presets:</span>
+              <button type="button" class="btn-shift-preset" data-shift="3">Shift 3 (Caesar Classic)</button>
+              <button type="button" class="btn-shift-preset" data-shift="13">Shift 13 (ROT13)</button>
+              <button type="button" class="btn-shift-preset" data-shift="-1">Shift -1 (Reverse)</button>
+              <button type="button" class="btn-shift-preset" data-shift="29">Shift 29 (Wraparound)</button>
+              <button type="button" class="btn-shift-preset" data-shift="0">Shift 0 (Identity)</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Visual Alphabet Mapping Strip -->
+          <div class="alphabet-strip-card">
+            <div class="alphabet-strip-title">
+              <span>Alphabet Alignment Visualizer</span>
+              <span style="color:var(--accent-cyan); font-weight:600;">Plain (A-Z) ➔ Cipher</span>
+            </div>
+            <div class="alphabet-scroll-container">
+              <div id="alphabet-grid" class="alphabet-grid" aria-label="Alphabet mapping ribbon">
+                <!-- Dynamically populated via js/app.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Interactive Actions -->
+          <div class="action-buttons-group">
+            <button type="button" id="btn-encrypt" class="btn btn-primary" aria-label="Encrypt plaintext with configured shift">
+              <span>🔒</span>
+              <span>Encrypt Text</span>
+            </button>
+            <button type="button" id="btn-decrypt" class="btn btn-secondary" aria-label="Decrypt ciphertext using configured shift">
+              <span>🔓</span>
+              <span>Decrypt Text</span>
+            </button>
+            <button type="button" id="btn-swap" class="btn btn-accent" aria-label="Transfer ciphertext to input for round-trip testing">
+              <span>🔄</span>
+              <span>Use Output as Input</span>
+            </button>
+            <button type="button" id="btn-reset" class="btn btn-danger" aria-label="Reset all inputs and outputs">
+              <span>🧹</span>
+              <span>Reset / Clear</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: DUAL OUTPUT & AUDIT PANELS -->
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              <span>📊</span>
+              <span>Output Panels &amp; Audit Trace</span>
+            </h2>
+          </div>
+
+          <p class="card-desc">
+            Dual display monitors simultaneously render the generated ciphertext and the independent decrypted verification result to guarantee lossless mathematical symmetry.
+          </p>
+
+          <!-- Stale Warning Notification -->
+          <div id="stale-warning" class="stale-warning" role="status">
+            <span>⚠️</span>
+            <span>Input or shift key was modified after generation. Click <strong>Encrypt</strong> or <strong>Decrypt</strong> to refresh results.</span>
+          </div>
+
+          <!-- Panel 1: Encrypted Output -->
+          <div class="output-card">
+            <div class="output-header">
+              <div class="output-title output-title-cyan">
+                <span>🔒</span>
+                <span>Encrypted Output (Ciphertext)</span>
+              </div>
+              <button type="button" id="btn-copy-cipher" class="btn btn-secondary btn-icon-only" aria-label="Copy ciphertext to clipboard">
+                <span>📋 Copy Ciphertext</span>
+              </button>
+            </div>
+            <div id="cipher-output" class="output-content-box empty" tabindex="0" role="region" aria-label="Ciphertext output area">
+              Encrypted ciphertext will appear here...
+            </div>
+            <div class="output-footer">
+              <span id="cipher-metrics">0 chars</span>
+              <span>Forward substitution: c = (p + k) mod 26</span>
+            </div>
+          </div>
+
+          <!-- Panel 2: Decrypted Verification Output -->
+          <div class="output-card">
+            <div class="output-header">
+              <div class="output-title output-title-emerald">
+                <span>🔓</span>
+                <span>Decrypted Output (Plaintext Verification)</span>
+              </div>
+              <button type="button" id="btn-copy-decrypted" class="btn btn-secondary btn-icon-only" aria-label="Copy decrypted plaintext to clipboard">
+                <span>📋 Copy Plaintext</span>
+              </button>
+            </div>
+            <div id="decrypted-output" class="output-content-box empty" tabindex="0" role="region" aria-label="Decrypted plaintext output area">
+              Decrypted verification plaintext will appear here...
+            </div>
+            <div class="output-footer">
+              <span id="decrypted-metrics">0 chars</span>
+              <span>Reverse substitution: p = (c - k) mod 26</span>
+            </div>
+          </div>
+
+          <!-- Round-Trip Invariant Banner -->
+          <div id="verification-badge" class="verification-badge hidden" role="status">
+            <span>🛡️</span>
+            <div>
+              <strong>Round-Trip Mathematical Invariant Verified:</strong>
+              <div><code>decrypt(encrypt(Plaintext, k), k) === Plaintext</code> — Transformation is 100% reversible and lossless.</div>
+            </div>
+          </div>
+
+          <!-- Brief Educational Mechanism Note -->
+          <div style="background:#0F141A; border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:14px; margin-top:16px;">
+            <div style="font-size:0.84rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">
+              How the Mathematical Transformation Works
+            </div>
+            <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              Every English character is converted into its 0-indexed alphabet ordinal: <code>A=0, B=1, ... Z=25</code>. 
+              The encryption function applies modular arithmetic: 
+              <code>E(x) = (x + k) mod 26</code>. 
+              The decryption function applies the inverse operation: 
+              <code>D(y) = (y - k) mod 26</code>. 
+              All other symbols, numbers, and international Unicode code points pass through unaltered.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: BRUTE-FORCE & CRYPTANALYSIS LAB -->
+    <section id="tab-cryptanalysis" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-cryptanalysis">
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <span>⚡</span>
+            <span>Exhaustive Key Space Search &amp; Frequency Analysis</span>
+          </h2>
+        </div>
+        <p class="card-desc">
+          Because the Caesar cipher key space is limited to $26 - 1 = 25$ non-trivial shifts, an adversary does not need the secret key to read the message. 
+          This lab tests all 25 potential shifts simultaneously and uses English letter frequency heuristics (ETAOIN SHRDLU) and dictionary matching to rank the most probable plaintext candidates.
+        </p>
+
+        <div class="form-group">
+          <label for="crack-input" class="form-label">Ciphertext to Analyze &amp; Crack:</label>
+          <textarea id="crack-input" class="form-control mono" rows="3" placeholder="Paste intercepted ciphertext here (e.g. Khoor Zruog!)..."></textarea>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <button type="button" id="btn-run-crack" class="btn btn-primary">
+            <span>⚡</span>
+            <span>Execute 25-Key Exhaustive Search</span>
+          </button>
+        </div>
+
+        <div id="crack-status" style="font-size:0.84rem; color:var(--accent-cyan); margin-bottom:14px; font-weight:600;" aria-live="polite">
+          Ready to evaluate keyspace.
+        </div>
+
+        <div class="table-responsive">
+          <table class="crack-table" aria-label="Brute force candidate results">
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Tested Shift Key</th>
+                <th scope="col">Likelihood Score</th>
+                <th scope="col">Dictionary Matches</th>
+                <th scope="col">Decrypted Candidate</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="crack-results-body">
+              <tr>
+                <td colspan="6" style="text-align:center; color:var(--text-muted); padding:24px;">
+                  No ciphertext analyzed yet. Enter ciphertext above and click "Execute 25-Key Exhaustive Search".
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: EDUCATIONAL & SECURITY PRINCIPLES -->
+    <section id="tab-education" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-education">
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <span>📖</span>
+            <span>Cybersecurity Principles &amp; Cryptographic Foundations</span>
+          </h2>
+        </div>
+
+        <div class="edu-grid">
+          
+          <article class="edu-card">
+            <h3><span>🏛️</span> Classical vs. Modern Cryptography</h3>
+            <p>
+              The Caesar cipher dates back to 58 BC, utilized by Julius Caesar to protect military dispatches. 
+              Classical ciphers operate through simple character-level substitutions or transpositions. 
+              Modern ciphers (such as AES-GCM and ChaCha20-Poly1305) operate on binary bit streams using complex Substitution-Permutation Networks (SPNs), 
+              providing resistance against differential and linear cryptanalysis.
+            </p>
+          </article>
+
+          <article class="edu-card">
+            <h3><span>🔑</span> The Small Key Space Dilemma</h3>
+            <p>
+              In cryptography, security is bounded by the size of the secret key space:
+            </p>
+            <ul>
+              <li><strong>Caesar Cipher:</strong> $\log_2(25) \approx 4.6$ bits of entropy. $25$ possible keys. Time to crack: &lt; 0.0001 seconds.</li>
+              <li><strong>DES (Legacy):</strong> 56 bits ($7.2 \times 10^{16}$ keys). Broken in 1999 in 22 hours.</li>
+              <li><strong>AES-256 (Modern Standard):</strong> 256 bits ($1.15 \times 10^{77}$ keys). Requires more energy than available in the observable universe to brute-force.</li>
+            </ul>
+          </article>
+
+          <article class="edu-card">
+            <h3><span>📜</span> Kerckhoffs' Principle</h3>
+            <p>
+              Formulated by Auguste Kerckhoffs in 1883: <em>"A cryptosystem should be secure even if everything about the system, except the key, is public knowledge."</em>
+            </p>
+            <p style="margin-top:8px;">
+              The Caesar cipher fails because the algorithm's structure is static and the key space is too small to conceal secrecy once the method is known.
+            </p>
+          </article>
+
+          <article class="edu-card">
+            <h3><span>📊</span> Frequency Analysis Vulnerability</h3>
+            <p>
+              Because the Caesar cipher is a <strong>monoalphabetic substitution</strong>, it preserves the underlying letter frequencies of natural language. 
+              In English, the letter 'E' appears with ~12.7% probability, followed by 'T', 'A', and 'O'. 
+              An attacker counting character occurrences in intercepted ciphertext can instantly identify the shift without brute force.
+            </p>
+          </article>
+
+          <article class="edu-card">
+            <h3><span>🔄</span> Modular Normalization ($k \pmod{26}$)</h3>
+            <p>
+              Any integer shift key $k \in \mathbb{Z}$ is mathematically equivalent to its remainder modulo 26:
+            </p>
+            <ul>
+              <li>Shifts larger than 26 wrap cleanly: $29 \equiv 3 \pmod{26}$.</li>
+              <li>Negative shifts represent reverse rotation: $-1 \equiv 25 \pmod{26}$.</li>
+              <li>Shift 0 or multiples of 26 represent identity transformations ($M \to M$).</li>
+            </ul>
+          </article>
+
+          <article class="edu-card">
+            <h3><span>🌐</span> Safe Unicode &amp; Code Point Invariance</h3>
+            <p>
+              Unlike legacy implementations that corrupt non-ASCII bytes or strip non-English characters, CIPHERGUARD strictly confines substitution to ASCII <code>A-Z</code> and <code>a-z</code>, leaving emojis, international scripts (Cyrillic, Arabic, CJK), and diacritics pristine.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- TOAST NOTIFICATION CONTAINER                                              -->
+  <!-- ========================================================================= -->
+  <div id="toast" class="toast" role="status" aria-live="assertive">Notification</div>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-container">
+      <div>
+        <strong>DecodeLabs Industrial Training Kit 2026</strong> | Cyber Security Project 2: Basic Encryption &amp; Decryption
+      </div>
+      <div>
+        <span>Built with HTML5, Vanilla CSS &amp; Modern ES6 JavaScript</span>
+        <span style="margin:0 8px;">•</span>
+        <span style="color:var(--accent-emerald);">● 100% Local Confidentiality</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/cipher.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
